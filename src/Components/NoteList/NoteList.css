@@ -1,0 +1,80 @@
+.tabname, .gamename{
+    margin-left: 141px;
+    text-align: center;
+    color: black;
+}
+
+.goback{
+    padding-left: 141px;
+    padding-bottom: 10px;
+}
+
+.gameSelect{
+    /*margin-left: 140px;
+    margin:auto;*/
+   /* padding-left: 140px;*/
+   box-sizing: border-box;
+   /*box-sizing: content-box;*/
+    width: 200px;
+    margin-left: 16px;
+    margin-right: 16px;
+    
+}
+
+.spacing{
+    /*display: inline-block;*/
+    margin-left: 141px;
+    /*text-align: center;*/
+}
+
+.note_list{
+    display: inline-block;
+    
+    display: flex;
+    justify-content: flex-start;
+    /*align-content: stretch;*/
+    flex-wrap: wrap;
+}
+
+.small_note{
+    display: inline-block;
+    border: 2px black solid;
+    margin: 10px;
+    width: 200px;
+    text-align: center;
+}
+
+@media (min-width: 1px){
+    .note_list{
+        /*margin-left: 10px;
+            224 - (100vw /224px) 
+        */
+        width: calc(100vw - 141px)
+    }
+}
+
+@media (max-width: 414px){
+    .small_note{
+        width: 150px;
+    }
+
+    .note_list{
+        justify-content: space-evenly;
+        
+    }
+}
+
+@media (max-width: 587px){
+    .note_list{
+        justify-content: space-evenly;
+        
+    }
+}
+
+/*
+@media (max-width: 800px){
+    .note_list{
+        justify-content: space-evenly;
+        
+    }
+}*/

@@ -1,0 +1,21 @@
+h1 {
+    text-align: center;
+}
+
+.game{
+    margin-top: 40px;
+    border: 1px black solid;  
+    margin-left: 20px;
+    margin-right: 20px;  
+}
+
+h3 {
+    text-align: center;
+}
+
+.game button{
+    display: block;
+    margin: auto;
+    margin-bottom: 5px;
+}
+

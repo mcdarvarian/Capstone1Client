@@ -1,0 +1,22 @@
+
+
+#note_label{
+    margin-top: 10px;
+    display: block;
+    width: 100%;
+}
+
+#title{
+    margin: auto;
+    width: 20%;
+}
+
+#contents{
+    display: block;
+    margin-left: 161px;
+    width: calc(100vw - 181px);
+    min-height: 200px;
+    max-height: 75vw;
+    word-wrap: break-word;
+
+}

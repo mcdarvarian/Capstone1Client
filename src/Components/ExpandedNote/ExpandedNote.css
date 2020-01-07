@@ -1,0 +1,25 @@
+.expanded_notes{
+    display: block;
+    margin-left: 141px;
+}
+
+.delete_note_button p, .update_note_button p{
+    /*display: inline-block;*/
+    text-align: center;
+}
+
+.note_content{
+    margin: 10px;
+    text-align: left;
+}
+
+.note_title{
+    color: black;
+}
+
+
+@media (max-width: 414px){
+    .note_content{
+        text-align: center;
+    }
+}
