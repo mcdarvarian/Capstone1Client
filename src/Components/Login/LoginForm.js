@@ -42,10 +42,15 @@ export default class LoginForm extends React.Component{
         })
             .then(res =>{
                 if(!res.ok){
-                    console.log(':(')
+                    window.alert('invalid login');
+                } else {
+                    this.props.history.push('/');
                 }
-                console.log(':)')
             })
+    }
+
+    SignUp(){
+        this.props.history.push('/signup')
     }
 
 
@@ -56,11 +61,14 @@ export default class LoginForm extends React.Component{
                 <h1 className='title'>Log in</h1>
                 <form onSubmit={e => this.submitLogin(e)}>
                     <label htmlFor='username'>Username:</label>
-                    <input required type='text' id='username' value={this.state.username} onChange={e=> this.onUsernameChange(e)} />
+                    <input required type='text' id='username' value={this.state.username} 
+                    onChange={e=> this.onUsernameChange(e)} />
                     <label htmlFor='password'>Password:</label>
-                    <input required type='text' id='password' value={this.state.password} onChange={e => this.onPasswordChange(e)} />
+                    <input required type='password' id='password' value={this.state.password} 
+                    onChange={e => this.onPasswordChange(e)} />
                     <button type='submit' className='login_button' >Login</button>
                 </form>
+                <button className='sign_up' onClick={() => this.SignUp()} >Sign Up</button>
             </div>
         )
     }

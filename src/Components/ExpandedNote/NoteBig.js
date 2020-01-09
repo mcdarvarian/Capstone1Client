@@ -8,9 +8,9 @@ export default class NoteBig extends React.Component {
                 <h3 className='note_title'>
                     {this.props.name}
                 </h3>
-                <p className='note_content'>
+                <div className='note_content'>
                     {this.props.contents}
-                </p>
+                </div>
             </div>
         )
     }

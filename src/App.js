@@ -23,10 +23,10 @@ import './App.css';
 const API_URL = config.API_URL;
 
 class App extends Component {
-  
+
   state = {
     games: [],
-    notes: [{id: 0}],
+    notes: [{ id: 0 }],
     tabs: [],
     game_id: 0,
     tab_id: 1
@@ -38,15 +38,17 @@ class App extends Component {
   componentDidMount() {
     //get all the games, as well as initialize the tabs array
     Promise.all([
-      fetch(`${API_URL}/game`,{
-      headers: {
-        'authorization': `basic ${TokenService.getAuthToken()}`
-    }}),
-      fetch(`${API_URL}/setup`),
-      fetch(`${API_URL}/note/`,{
+      fetch(`${API_URL}/game`, {
         headers: {
           'authorization': `basic ${TokenService.getAuthToken()}`
-      }})
+        }
+      }),
+      fetch(`${API_URL}/setup`),
+      fetch(`${API_URL}/note/`, {
+        headers: {
+          'authorization': `basic ${TokenService.getAuthToken()}`
+        }
+      })
     ])
       .then(([gamesRes, setupRes, noteRes]) => {
 
@@ -94,15 +96,15 @@ class App extends Component {
   }
 
   handleAddGame = game => {
-      this.setState({
-        games: [...this.state.games, game]
-      })
-      
+    this.setState({
+      games: [...this.state.games, game]
+    })
+
   }
 
-  handleUpdateNote = (id, newTitle, newContents) =>{
-    const notes = this.state.notes.map(note =>{
-      if(note.id === id){
+  handleUpdateNote = (id, newTitle, newContents) => {
+    const notes = this.state.notes.map(note => {
+      if (note.id === id) {
         const newNote = {
           id: id,
           tab_id: note.tab_id,
@@ -111,13 +113,31 @@ class App extends Component {
           contents: newContents,
         }
         return newNote
-      } 
+      }
       return note
-    }) 
+    })
 
     this.setState({
       notes: notes
     })
+  }
+
+  checkLogin() {
+    fetch(`${API_URL}/user/login`,{
+      headers: {
+        'authorization' : `basic ${TokenService.getAuthToken()}`
+      }
+    })
+      .then(res => {
+        console.log(res.status);
+        if (res.status === 401) {
+          console.log('returning false');
+          return false;
+        }
+        console.log('returning true');
+        return true;
+      })
+    return false;
   }
 
   handleDeleteNote = noteId => {
@@ -134,25 +154,28 @@ class App extends Component {
 
   renderHomeRoute() {
     //<Route path='game/:game_id/:tab_id' component={NoteList} />
+
     return (
       <>
-      <Switch>
-        
-        <Route exact path="/" component={GameSelect} />
-        <Route exact path='/login' component={LoginForm} />
-        <Route exact path='/signup' component={Signup} />
-        <Route exact path='/game/:game_id/:tab_id' component={NoteList} />
-        <Route exact path='/note/:game_id/:tab_id/:note_id' component={ExpandedNote} />
-        <Route exact path='/note-form/:game_id/:tab_id/:note_id' component={NoteForm} />
-        <Route exact path='/new-game' component={NewGame}/>
-        <Route exact path='/shhh' component={Shhh} />
+        <Switch>
 
-        <Route exact path='/not-found' component={MissingPage} />
+          <Route exact path="/" component={GameSelect} />
+          <Route exact path='/login' component={LoginForm} />
+          <Route exact path='/signup' component={Signup} />
+          <Route exact path='/game/:game_id/:tab_id' component={NoteList} />
+          <Route exact path='/note/:game_id/:tab_id/:note_id' component={ExpandedNote} />
+          <Route exact path='/note-form/:game_id/:tab_id/:note_id' component={NoteForm} />
+          <Route exact path='/new-game' component={NewGame} />
+          <Route exact path='/shhh' component={Shhh} />
 
-        <Route component={MissingPage} />
+          <Route exact path='/not-found' component={MissingPage} />
+
+          <Route component={MissingPage} />
         </Switch>
       </>
     );
+
+
   }
 
 
@@ -166,13 +189,13 @@ class App extends Component {
       API_URL: API_URL,
       handleChangeGame: this.handleChangeGame,
       handleChangeTab: this.handleChangeTab,
-      handleNewNote : this.handleAddNote,
+      handleNewNote: this.handleAddNote,
       handleUpdateNote: this.handleUpdateNote,
-      handleNewGame : this.handleAddGame,
-      handleDeleteGame : this.handleDeleteGame,
-      handleDeleteNote : this.handleDeleteNote
-      
-       
+      handleNewGame: this.handleAddGame,
+      handleDeleteGame: this.handleDeleteGame,
+      handleDeleteNote: this.handleDeleteNote
+
+
     }
     /*console.log('games is ', this.state.games);
     console.log('notes is', this.state.notes);

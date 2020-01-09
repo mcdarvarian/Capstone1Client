@@ -4,6 +4,8 @@ import NotebookContext from '../../NotebookContext';
 import TabBar from '../TabBar/TabBar'
 import {NavLink} from 'react-router-dom'
 import './NoteList.css'
+import TokenService from '../../TokenService'
+import Head from '../Head/Head'
 
 
 export default class NoteList extends React.Component {
@@ -12,6 +14,18 @@ export default class NoteList extends React.Component {
 
     static contextType = NotebookContext;
 
+    
+    checkLogin(){
+        return fetch(`${this.context.API_URL}/user/login`, {
+            headers: {
+              'authorization': `basic ${TokenService.getAuthToken()}`
+            }
+          }).then(res =>{
+              if(res.status === 401){
+                  this.props.history.push('/login');
+              }
+          })
+    }
     checkIfRightPage(gameid, tabid){
         const game = this.context.games.filter(game => game.id === gameid);
         const tab = this.context.tabs.filter(tab => tab.id === tabid);
@@ -22,9 +36,11 @@ export default class NoteList extends React.Component {
             }
         }
     }
+
     
 
     render() {
+        this.checkLogin();
         let route = this.props.location.pathname
         const gameid = parseInt(route.replace('/game/', '').split('/')[0]);
         const tabid = parseInt(route.replace('/game/', '').split('/')[1]);
@@ -43,6 +59,7 @@ export default class NoteList extends React.Component {
         return (
 
             <div className='tab_notes'>
+                <Head></Head>
                 <header>
                     <h1 className='gamename'>{gameName.gamename}</h1>
                     <h3 className='tabname'>{tabName.tabname}</h3>
@@ -51,9 +68,8 @@ export default class NoteList extends React.Component {
                 <div className='spacing'>
                 <ul className='note_list'>
                     {noteList}
-                    <div className='small_note'>
-                    <NavLink  to={`/note-form/${gameid}/${tabid}/0`} ><li ><p>Make New Note</p></li></NavLink>
-                    </div>
+                    <NavLink className='small_note' to={`/note-form/${gameid}/${tabid}/0`} ><li>
+                        <p>Make New Note</p></li></NavLink>
                 </ul>
                 </div>
                 <div className='goback'>

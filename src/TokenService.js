@@ -14,7 +14,11 @@ const TokenService = {
     },
     hasAuthToken(){
         return !!TokenService.getAuthToken()
-    }
+    }/*,
+    getUserId(){
+        let x = window.localStorage.getItem(config.TOKEN_KEY);
+        x = window.atob(x);
+    }*/
 }
 
 export default TokenService

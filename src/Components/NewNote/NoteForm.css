@@ -14,9 +14,12 @@
 #contents{
     display: block;
     margin-left: 161px;
+    overflow: auto;
     width: calc(100vw - 181px);
+    height: 100vw;
+    resize: none;
     min-height: 200px;
-    max-height: 75vw;
+    /*max-height: 75vw;*/
     word-wrap: break-word;
 
 }

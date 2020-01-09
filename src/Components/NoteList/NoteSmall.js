@@ -9,11 +9,10 @@ export default class NoteSmall extends React.Component {
         const gameid = parseInt(route.replace('/game/', '').split('/')[0]);
         const tabid = parseInt(route.replace('/game/', '').split('/')[1]);
         return (
-            <div className='small_note'>
-                <NavLink to={`/note/${gameid}/${tabid}/${this.props.id}`} >
+            
+                <NavLink className='small_note' to={`/note/${gameid}/${tabid}/${this.props.id}`} >
                     <li><p >{`${this.props.name}`}</p></li>
                 </NavLink>
-            </div>
                 
         )
     }

@@ -4,13 +4,13 @@
 }
 
 .delete_note_button p, .update_note_button p{
-    /*display: inline-block;*/
     text-align: center;
 }
 
 .note_content{
     margin: 10px;
     text-align: left;
+    white-space: pre-wrap;
 }
 
 .note_title{

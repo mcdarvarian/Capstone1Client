@@ -2,6 +2,9 @@ import React from 'react';
 import TabBar from '../TabBar/TabBar';
 import notebookContext from '../../NotebookContext'
 import './NoteForm.css'
+import TokenService from '../../TokenService'
+import Head from '../Head/Head';
+import TextareaAutosize from 'react-textarea-autosize';
 
 export default class NoteForm extends React.Component {
     static contextType = notebookContext;
@@ -15,6 +18,19 @@ export default class NoteForm extends React.Component {
 
     }
 
+    
+    checkLogin(){
+        return fetch(`${this.context.API_URL}/user/login`, {
+            headers: {
+              'authorization': `basic ${TokenService.getAuthToken()}`
+            }
+          }).then(res =>{
+              if(res.status === 401){
+                  this.props.history.push('/login');
+              }
+          })
+    }
+
     //checks to see if the note id is 0, if it is, leaves things empty, if it isnt, find the note and updates the state, returns null
     getNoteIfExists() {
         //console.log(this.context.notes);
@@ -23,6 +39,7 @@ export default class NoteForm extends React.Component {
         if (id === 0) {
             return [false, 0, '', '']
         } else {
+            
             //stops program from throwing an error if the page is reloaded and context needs to be refilled
             if (this.context.notes.length !== 0) {
                 const note = this.context.notes.filter(note => note.id === parseInt(id))
@@ -35,6 +52,7 @@ export default class NoteForm extends React.Component {
                 const exists = true;
                 return [exists, id, title, contents]
             }
+            return [false, 0, '', '']
         }
     }
 
@@ -80,6 +98,7 @@ export default class NoteForm extends React.Component {
             method: 'PATCH',
             body: JSON.stringify(updateItem),
             headers: {
+                'authorization': `basic ${TokenService.getAuthToken()}`,
                 'content-type': 'application/json'
             },
         }).then(res =>{
@@ -104,7 +123,8 @@ export default class NoteForm extends React.Component {
             method: 'POST',
             body: JSON.stringify(newNote),
             headers: {
-                'content-type': 'application/json'
+                'content-type': 'application/json',
+                'authorization': `basic ${TokenService.getAuthToken()}`
             },
         }).then(res =>{
             if(res.ok){
@@ -116,18 +136,21 @@ export default class NoteForm extends React.Component {
             this.context.handleNewNote(resJson);
         })
     }
+
     render() {
+        this.checkLogin();
         const [exists, id, title, contents] = this.getNoteIfExists();
         const gameid = parseInt(this.props.location.pathname.replace('/note-form/', '').split('/')[0])
         //const tabid = parseInt(this.props.location.pathname.replace('/note-form/', '').split('/')[0])
         return (
             <div className='note_form_page'>
+                <Head></Head>
                 <TabBar game={gameid}></TabBar>
                 <form className='note_form' onSubmit={e => this.SubmitNote(exists, id, e)}>
                     <label htmlFor='title'>Note Title:</label>
                     <input type='text' id='title' defaultValue={title} onChange={e => this.changeTitle(e)} required />
                     <label id='note_label' htmlFor='contents'>Note:</label>
-                    <textarea id='contents'  defaultValue={contents}
+                    <TextareaAutosize  id='contents'  defaultValue={contents}
                         onChange={e => { this.changeContents(e) }}  required />
                     
                     <button className='submit'>Submit Note</button>

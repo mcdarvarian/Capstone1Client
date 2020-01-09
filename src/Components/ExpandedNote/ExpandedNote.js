@@ -3,9 +3,24 @@ import BigNote from './NoteBig';
 import TabBar from '../TabBar/TabBar'
 import NotebookContext from '../../NotebookContext';
 import './ExpandedNote.css'
+import TokenService from '../../TokenService'
+import Head from '../Head/Head'
 
 export default class ExpandedNote extends React.Component {
     static contextType = NotebookContext;
+
+    
+    checkLogin(){
+        return fetch(`${this.context.API_URL}/user/login`, {
+            headers: {
+              'authorization': `basic ${TokenService.getAuthToken()}`
+            }
+          }).then(res =>{
+              if(res.status === 401){
+                  this.props.history.push('/login');
+              }
+          })
+    }
 
     handleUpdateItem(id, gameid, tabid) {
         console.log('id is ', id);
@@ -30,7 +45,14 @@ export default class ExpandedNote extends React.Component {
             })
     }
 
+    logOut(e){
+        e.preventDefault();
+        TokenService.clearAuthToken();
+        this.props.history.push('/login');
+    }
+
     render() {
+        this.checkLogin();
         let note = []
         const id = this.props.location.pathname.replace('/note/', '').split('/');
         const gameid = parseInt(this.props.location.pathname.replace('/note/', '').split('/')[0])
@@ -47,11 +69,12 @@ export default class ExpandedNote extends React.Component {
 
         return (
             <div className='expanded_note'>
+                <Head></Head>
                 <header>
                     <h1 className='gamename'>{gameName.gamename}/{tabName.tabname}</h1>
                     
                 </header>
-                <body className='expanded_notes'>
+                <main className='expanded_notes'>
                     <TabBar game={gameid}></TabBar>
                     <BigNote name={note[0].title} contents={note[0].contents}></BigNote>
                     <div className='update_note_button'>
@@ -68,7 +91,7 @@ export default class ExpandedNote extends React.Component {
                             }}>Delete this note</button>
                     </div>
                     <button className='back' onClick={() => this.props.history.push(`/game/${gameid}/${tabid}`)}>Back</button>
-                </body>
+                </main>
             </div>
 
         )
