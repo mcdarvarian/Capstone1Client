@@ -14,3 +14,8 @@ button{
     margin: auto;
     margin-top: 20px;
 }
+
+.landing{
+    height: 100vw;
+    text-align: center;
+}

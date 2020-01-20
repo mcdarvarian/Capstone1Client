@@ -1,4 +1,5 @@
-import config from './config'
+import config from './config';
+
 const TokenService = {
     makeBasicAuth(username, password) {
         return window.btoa(`${username}:${password}`)
@@ -19,6 +20,6 @@ const TokenService = {
         let x = window.localStorage.getItem(config.TOKEN_KEY);
         x = window.atob(x);
     }*/
-}
+};
 
-export default TokenService
+export default TokenService;

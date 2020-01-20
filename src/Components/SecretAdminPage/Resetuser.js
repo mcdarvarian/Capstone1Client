@@ -1,5 +1,5 @@
 import React from 'react';
-import NotebookContext from './../../NotebookContext'
+import NotebookContext from './../../NotebookContext';
 
 export default class SecretPage extends React.Component {
     static contextType = NotebookContext;
@@ -10,9 +10,9 @@ export default class SecretPage extends React.Component {
         old_username = old_username.value;
         new_username = new_username.value;
         new_password= new_password.value;
-        admin_key = admin_key.value;
+        admin_key = window.btoa(admin_key.value);
 
-        const nameChanger = { old_username, new_username, new_password, admin_key}
+        const nameChanger = { old_username, new_username, new_password, admin_key};
 
         return fetch(`${this.context.API_URL}/user/admin`, {
             method: 'PATCH',
@@ -20,7 +20,7 @@ export default class SecretPage extends React.Component {
             headers: {
                 'content-type' : 'application/json'
             }
-        })
+        });
     }
 
     DeleteUser(e){
@@ -31,7 +31,7 @@ export default class SecretPage extends React.Component {
         password = password.value;
         admin_key = window.btoa(admin_key.value);
 
-        const nameDelete = {username, password, admin_key}
+        const nameDelete = {username, password, admin_key};
         return fetch (`${this.context.API_URL}/user/admin`, {
             method: 'DELETE',
             body: JSON.stringify(nameDelete),
@@ -40,11 +40,11 @@ export default class SecretPage extends React.Component {
             }
         }).then(res =>{
             window.alert(`deleted ${username}`);
-            console.log(res);
-        })
+        });
     }
 
     render() {
+        //made for admin use, intentionally not the most clear 
         return (
             <div className='shhh'>
                 <form onSubmit={e => this.SubmitChanges(e)}>
@@ -69,6 +69,6 @@ export default class SecretPage extends React.Component {
                     <button type='submit' >Submit Changes</button>
                 </form>
             </div>
-        )
+        );
     }
 }

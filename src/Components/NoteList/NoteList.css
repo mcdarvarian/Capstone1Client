@@ -7,18 +7,36 @@
 .goback{
     padding-left: 141px;
     padding-bottom: 10px;
+    text-align: center;
 }
 
 .gameSelect{
-    /*margin-left: 140px;
-    margin:auto;*/
+    /*margin-left: 140px;*/
+    margin:auto;
+    margin-top: 20px;
    /* padding-left: 140px;*/
    box-sizing: border-box;
-   /*box-sizing: content-box;*/
     width: 200px;
-    margin-left: 16px;
-    margin-right: 16px;
-    
+    /*margin-left: 16px;
+    margin-right: 16px;*/
+}
+
+p{
+    height: 37.5px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 5px;
+    text-decoration: none;
+}
+
+h3{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    text-decoration: none;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 .spacing{
@@ -28,53 +46,64 @@
 }
 
 .note_list{
-    display: inline-block;
-    
+    margin: auto;
     display: flex;
     justify-content: flex-start;
     /*align-content: stretch;*/
     flex-wrap: wrap;
 }
 
+.small_note h3, .small_note p{
+    background-color: #55CDFC;
+}
+
+.small_note h3{
+    margin-bottom: 0;
+}
+
+.small_note p{
+    margin: 0;  
+}
+
 .small_note{
+    background-color: #55CDFC;
     display: inline-block;
     border: 2px black solid;
     margin: 10px;
     width: 200px;
+    height: 100px;
     text-align: center;
 }
 
 @media (min-width: 1px){
     .note_list{
-        /*margin-left: 10px;
-            224 - (100vw /224px) 
-        */
         width: calc(100vw - 141px)
+    }
+
+    .gameSelect{
+        width: 150px;
     }
 }
 
 @media (max-width: 414px){
+    .spacing, .tabname, .gamename{
+        margin-left: 106px;
+    }
+
     .small_note{
         width: 150px;
     }
 
     .note_list{
-        justify-content: space-evenly;
+        justify-content: center;
         
     }
 }
 
 @media (max-width: 587px){
     .note_list{
-        justify-content: space-evenly;
+        justify-content: center;
         
     }
 }
 
-/*
-@media (max-width: 800px){
-    .note_list{
-        justify-content: space-evenly;
-        
-    }
-}*/

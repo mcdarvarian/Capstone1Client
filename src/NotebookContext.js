@@ -1,5 +1,5 @@
 import react from 'react';
-import store from './store'
+import store from './store';
 
 const NotebookContext = react.createContext({
     tabs: store.tabs,
@@ -15,6 +15,6 @@ const NotebookContext = react.createContext({
     handleDeleteNote : () => {},
     handleNewGame : () => {},
     handleDeleteGame : () => {}
-})
+});
 
 export default NotebookContext;

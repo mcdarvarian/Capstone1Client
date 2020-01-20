@@ -8,4 +8,4 @@ export default React.createContext({
     tab_id: 1,
     API_URL: ''
 
-})
+});

@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
-//import { API_URL } from '../';
 import GameSelect from './Components/GameSelect/GameSelect';
 import NotebookContext from './NotebookContext';
-import TabBar from './Components/TabBar/TabBar';
 import NoteList from './Components/NoteList/NoteList';
-import NoteForm from './Components/NewNote/NoteForm'
+import NoteForm from './Components/NewNote/NoteForm';
 import ExpandedNote from './Components/ExpandedNote/ExpandedNote';
 import MissingPage from './Components/MissingPage/MissingPage';
 import NewGame from './Components/NewGame/NewGame';
@@ -13,7 +11,7 @@ import LoginForm from './Components/Login/LoginForm';
 import Signup from './Components/Signup/Signup';
 import Shhh from './Components/SecretAdminPage/Resetuser';
 import config from './config';
-import TokenService from './TokenService'
+import TokenService from './TokenService';
 
 
 import './App.css';
@@ -34,17 +32,17 @@ class App extends Component {
 
 
 
-
+//get all the games, notes and tabs and puts them in context
   componentDidMount() {
-    //get all the games, as well as initialize the tabs array
+    
     Promise.all([
-      fetch(`${API_URL}/game`, {
+      fetch(`${API_URL}/game/user`, {
         headers: {
           'authorization': `basic ${TokenService.getAuthToken()}`
         }
       }),
       fetch(`${API_URL}/setup`),
-      fetch(`${API_URL}/note/`, {
+      fetch(`${API_URL}/note/user`, {
         headers: {
           'authorization': `basic ${TokenService.getAuthToken()}`
         }
@@ -53,55 +51,57 @@ class App extends Component {
       .then(([gamesRes, setupRes, noteRes]) => {
 
         if (!gamesRes.ok)
-          return gamesRes.json().then(e => Promise.reject(e))
+          return gamesRes.json().then(e => Promise.reject(e));
         if (!setupRes.ok)
-          return setupRes.json().then(e => Promise.reject(e))
+          return setupRes.json().then(e => Promise.reject(e));
         if (!noteRes.ok)
-          return noteRes.json().then(e => Promise.reject(e))
+          return noteRes.json().then(e => Promise.reject(e));
 
 
-        return Promise.all([gamesRes.json(), setupRes.json(), noteRes.json()])
+        return Promise.all([gamesRes.json(), setupRes.json(), noteRes.json()]);
       })
       .then(([games, tabs, notes]) => {
-
         this.setState(
           {
             games: games,
             tabs: tabs,
             notes: notes
           }
-        )
+        );
       })
       .catch(error => {
-        console.error({ error })
+        console.error({ error });
       })
 
   }
 
+  //changes notes in state 
   handleChangeGame = (notes) => {
-    //console.log('changing game')
     this.setState({ notes: notes });
-  }
+  };
 
+  //changes what tab youre in
   handleChangeTab = id => {
-    //console.log('changing tab');
     this.setState({ tab_id: id });
-  }
+  };
 
+  //adds a note to the state
   handleAddNote = note => {
-    console.log(note);
+    
     this.setState({
       notes: [...this.state.notes, note]
-    })
-  }
+    });
+  };
 
+  //adds a game to the state
   handleAddGame = game => {
     this.setState({
       games: [...this.state.games, game]
-    })
+    });
 
-  }
+  };
 
+  //updates a note in the state
   handleUpdateNote = (id, newTitle, newContents) => {
     const notes = this.state.notes.map(note => {
       if (note.id === id) {
@@ -111,54 +111,35 @@ class App extends Component {
           game_id: note.game_id,
           title: newTitle,
           contents: newContents,
-        }
-        return newNote
+        };
+        return newNote;
       }
-      return note
-    })
+      return note;
+    });
 
     this.setState({
       notes: notes
-    })
-  }
+    });
+  };
 
-  checkLogin() {
-    fetch(`${API_URL}/user/login`,{
-      headers: {
-        'authorization' : `basic ${TokenService.getAuthToken()}`
-      }
-    })
-      .then(res => {
-        console.log(res.status);
-        if (res.status === 401) {
-          console.log('returning false');
-          return false;
-        }
-        console.log('returning true');
-        return true;
-      })
-    return false;
-  }
-
+  //deletes a note in the state
   handleDeleteNote = noteId => {
     this.setState({
       notes: this.state.notes.filter(note => note.id !== noteId)
-    })
-  }
+    });
+  };
 
+  //deletes a game in the state
   handleDeleteGame = game_id => {
     this.setState({
       games: this.state.games.filter(game => game.id !== game_id)
-    })
-  }
+    });
+  };
 
   renderHomeRoute() {
-    //<Route path='game/:game_id/:tab_id' component={NoteList} />
-
     return (
       <>
         <Switch>
-
           <Route exact path="/" component={GameSelect} />
           <Route exact path='/login' component={LoginForm} />
           <Route exact path='/signup' component={Signup} />
@@ -194,13 +175,8 @@ class App extends Component {
       handleNewGame: this.handleAddGame,
       handleDeleteGame: this.handleDeleteGame,
       handleDeleteNote: this.handleDeleteNote
+    };
 
-
-    }
-    /*console.log('games is ', this.state.games);
-    console.log('notes is', this.state.notes);
-    console.log('tabs is ', this.state.tabs);*/
-    //console.log('rendering')
     return (
       <NotebookContext.Provider value={value} >
         <div className='app_page'>
@@ -208,19 +184,8 @@ class App extends Component {
         </div>
       </NotebookContext.Provider>
 
-    )
+    );
   }
 }
 
 export default App;
-
-/*fetch(`${API_URL}/setup`)
-        .then(res => {
-          if (!res.ok)
-            return res.json().then(e => { console.log('reject'); Promise.reject(e) });
-          return res.json();
-        })
-        .then(res => {
-          this.setState({ tabs: res })
-
-        })*/

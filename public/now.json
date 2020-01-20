@@ -1,0 +1,9 @@
+{
+    "version": 2,
+    "alias": "mcd-capstone1-client",
+    "name": "capstone-client",
+    "routes": [
+        { "handle": "filesystem" },
+        { "src": "/.*", "dest": "/index.html" }
+    ]
+  }

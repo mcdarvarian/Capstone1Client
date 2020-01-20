@@ -12,6 +12,6 @@ export default class NoteBig extends React.Component {
                     {this.props.contents}
                 </div>
             </div>
-        )
+        );
     }
 }

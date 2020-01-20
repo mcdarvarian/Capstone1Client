@@ -1,11 +1,11 @@
-import NoteSmall from './NoteSmall'
-import React from 'react'
+import NoteSmall from './NoteSmall';
+import React from 'react';
 import NotebookContext from '../../NotebookContext';
-import TabBar from '../TabBar/TabBar'
-import {NavLink} from 'react-router-dom'
-import './NoteList.css'
-import TokenService from '../../TokenService'
-import Head from '../Head/Head'
+import TabBar from '../TabBar/TabBar';
+import { NavLink } from 'react-router-dom';
+import './NoteList.css';
+import TokenService from '../../TokenService';
+import Head from '../Head/Head';
 
 
 export default class NoteList extends React.Component {
@@ -14,50 +14,53 @@ export default class NoteList extends React.Component {
 
     static contextType = NotebookContext;
 
-    
-    checkLogin(){
+
+    checkLogin() {
         return fetch(`${this.context.API_URL}/user/login`, {
             headers: {
-              'authorization': `basic ${TokenService.getAuthToken()}`
+                'authorization': `basic ${TokenService.getAuthToken()}`
             }
-          }).then(res =>{
-              if(res.status === 401){
-                  this.props.history.push('/login');
-              }
-          })
+        }).then(res => {
+            if (res.status === 401) {
+                this.props.history.push('/login');
+            }
+        });
     }
-    checkIfRightPage(gameid, tabid){
+
+    //makes sure youre in a place that exists otherwise kicks you out
+    checkIfRightPage(gameid, tabid) {
         const game = this.context.games.filter(game => game.id === gameid);
         const tab = this.context.tabs.filter(tab => tab.id === tabid);
-        if(game.length === 0 || tab.length === 0){
-            if(this.context.games.length !== 0 ){
-               // console.log(this)
+        if (game.length === 0 || tab.length === 0) {
+            if (this.context.games.length !== 0) {
                 this.props.history.push('/not-found');
             }
         }
     }
 
-    
+
 
     render() {
+        //check to see if the user is logged into a valid account
         this.checkLogin();
-        let route = this.props.location.pathname
+        //gets relevant information for the 
+        let route = this.props.location.pathname;
         const gameid = parseInt(route.replace('/game/', '').split('/')[0]);
         const tabid = parseInt(route.replace('/game/', '').split('/')[1]);
-        const gameName = this.context.games.filter(game => game.id === gameid)[0] || {gamename: 'no name'};
-        const tabName = this.context.tabs.filter(tab => tab.id === tabid)[0] || {tabname: 'no name'};
-        //console.log(game);
+        const gameName = this.context.games.filter(game => game.id === gameid)[0] || { gamename: 'no name' };
+        const tabName = this.context.tabs.filter(tab => tab.id === tabid)[0] || { tabname: 'no name' };
+
+        //kicks you out if youre lost
         this.checkIfRightPage(gameid, tabid);
+
+        //make a list of condensed notes
         const notes = this.context.notes;
         let noteList = notes.filter(note => note.tab_id === tabid && note.game_id === gameid);
-        noteList = noteList.map(note =>{
-            return <NoteSmall key={note.id} route={route} id={note.id} name={note.title}></NoteSmall>
-        })
-        
-        //console.log('made notes')
-        
-        return (
+        noteList = noteList.map(note => {
+            return <NoteSmall key={note.id} route={route} id={note.id} name={note.title} contents={note.contents}></NoteSmall>
+        });
 
+        return (
             <div className='tab_notes'>
                 <Head></Head>
                 <header>
@@ -66,16 +69,17 @@ export default class NoteList extends React.Component {
                 </header>
                 <TabBar game={gameid}></TabBar>
                 <div className='spacing'>
-                <ul className='note_list'>
-                    {noteList}
-                    <NavLink className='small_note' to={`/note-form/${gameid}/${tabid}/0`} ><li>
-                        <p>Make New Note</p></li></NavLink>
-                </ul>
+                    <ul className='note_list'>
+                        {noteList}
+                        <NavLink className='small_note' to={`/note-form/${gameid}/${tabid}/0`} ><li>
+                            <h3>Make New Note</h3></li></NavLink>
+                    </ul>
                 </div>
                 <div className='goback'>
-                <button className='gameSelect' onClick={() =>{ this.props.history.push('/')}}>Back to Game Select</button>
+                    <button className='gameSelect' onClick={() => { this.props.history.push('/') }}>Back to Game Select</button>
                 </div>
             </div>
-        )
+        );
+
     }
 }

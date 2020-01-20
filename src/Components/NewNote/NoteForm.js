@@ -1,8 +1,8 @@
 import React from 'react';
 import TabBar from '../TabBar/TabBar';
-import notebookContext from '../../NotebookContext'
-import './NoteForm.css'
-import TokenService from '../../TokenService'
+import notebookContext from '../../NotebookContext';
+import './NoteForm.css';
+import TokenService from '../../TokenService';
 import Head from '../Head/Head';
 import TextareaAutosize from 'react-textarea-autosize';
 
@@ -18,7 +18,7 @@ export default class NoteForm extends React.Component {
 
     }
 
-    
+    //check to see if the user is logged into a valid account
     checkLogin(){
         return fetch(`${this.context.API_URL}/user/login`, {
             headers: {
@@ -28,63 +28,60 @@ export default class NoteForm extends React.Component {
               if(res.status === 401){
                   this.props.history.push('/login');
               }
-          })
+          });
     }
 
     //checks to see if the note id is 0, if it is, leaves things empty, if it isnt, find the note and updates the state, returns null
     getNoteIfExists() {
-        //console.log(this.context.notes);
 
         let id = this.props.location.pathname.replace('/note-form/', '').split('/')[2];
         if (id === 0) {
-            return [false, 0, '', '']
+            return [false, 0, '', ''];
         } else {
-            
             //stops program from throwing an error if the page is reloaded and context needs to be refilled
             if (this.context.notes.length !== 0) {
-                const note = this.context.notes.filter(note => note.id === parseInt(id))
+                const note = this.context.notes.filter(note => note.id === parseInt(id));
                 if(note.length ===0){
-                    return [false, 0, '', '']
+                    return [false, 0, '', ''];
                 }
                 const title = note[0].title;
                 const contents = note[0].contents;
                 id = note[0].id;
                 const exists = true;
-                return [exists, id, title, contents]
+                return [exists, id, title, contents];
             }
-            return [false, 0, '', '']
+            return [false, 0, '', ''];
         }
     }
 
     changeTitle(e) {
         this.setState({
             title: e.currentTarget.value
-        })
+        });
     }
 
     changeContents(e) {
         this.setState({
             contents: e.currentTarget.value
-        })
+        });
     }
 
+    //either makes a new note or updates a note depending on if the note itself exists
     SubmitNote(exists, id, e) {
         e.preventDefault();
-        let {title, contents} = e.currentTarget
+        let {title, contents} = e.currentTarget;
         title = title.value;
         contents = contents.value;
-        const gameid = this.props.location.pathname.replace('/note-form/', '').split('/')[0]
-        const tabid = this.props.location.pathname.replace('/note-form/', '').split('/')[1]
-        console.log('title', title);
-        console.log('contents', contents);
+        const gameid = this.props.location.pathname.replace('/note-form/', '').split('/')[0];
+        const tabid = this.props.location.pathname.replace('/note-form/', '').split('/')[1];
         if(exists){
             this.props.history.push(`/note/${gameid}/${tabid}/${id}`);
-            this.apiUpdateNote(gameid, tabid, id, title, contents)
+            this.apiUpdateNote(gameid, tabid, id, title, contents);
             
             
         } else {
             this.props.history.push(`/game/${gameid}/${tabid}`);
-            this.apiAddNote(gameid, tabid)
+            this.apiAddNote(gameid, tabid);
 
         }
     }
@@ -93,7 +90,7 @@ export default class NoteForm extends React.Component {
         const updateItem = {
             title: title,
             contents: contents
-        }
+        };
         return fetch(`${this.context.API_URL}/note/${noteid}`, {
             method: 'PATCH',
             body: JSON.stringify(updateItem),
@@ -103,13 +100,13 @@ export default class NoteForm extends React.Component {
             },
         }).then(res =>{
             if(res.ok){
-                return res.json()
+                return res.json();
             } else {
                 return res.json().then(e => Promise.reject(e));
             }
         }).then(resNote =>{
-            this.context.handleUpdateNote(noteid, title, contents)
-        })
+            this.context.handleUpdateNote(noteid, title, contents);
+        });
     }
 
     apiAddNote(gameid, tabid){
@@ -118,7 +115,7 @@ export default class NoteForm extends React.Component {
             game_id: gameid,
             title: this.state.title,
             contents: this.state.contents
-        }
+        };
         return fetch(`${this.context.API_URL}/game/${gameid}/${tabid}`,{
             method: 'POST',
             body: JSON.stringify(newNote),
@@ -128,19 +125,20 @@ export default class NoteForm extends React.Component {
             },
         }).then(res =>{
             if(res.ok){
-                return res.json()
+                return res.json();
             } else {
-                return res.json().then(e => Promise.reject(e))
+                return res.json().then(e => Promise.reject(e));
             }
         }).then(resJson =>{
             this.context.handleNewNote(resJson);
-        })
+        });
     }
 
     render() {
+        //check to see if the user is logged into a valid account
         this.checkLogin();
         const [exists, id, title, contents] = this.getNoteIfExists();
-        const gameid = parseInt(this.props.location.pathname.replace('/note-form/', '').split('/')[0])
+        const gameid = parseInt(this.props.location.pathname.replace('/note-form/', '').split('/')[0]);
         //const tabid = parseInt(this.props.location.pathname.replace('/note-form/', '').split('/')[0])
         return (
             <div className='note_form_page'>
@@ -157,6 +155,7 @@ export default class NoteForm extends React.Component {
                 </form>
                 <button className='cancel' onClick={() => this.props.history.goBack()}>Cancel</button>
             </div>
-        )
+        );
+    
     }
 }
