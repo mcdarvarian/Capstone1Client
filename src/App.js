@@ -36,17 +36,9 @@ class App extends Component {
   componentDidMount() {
     
     Promise.all([
-      fetch(`${API_URL}/game/user`, {
-        headers: {
-          'authorization': `basic ${TokenService.getAuthToken()}`
-        }
-      }),
+      fetch(`${API_URL}/game`),
       fetch(`${API_URL}/setup`),
-      fetch(`${API_URL}/note/user`, {
-        headers: {
-          'authorization': `basic ${TokenService.getAuthToken()}`
-        }
-      })
+      fetch(`${API_URL}/note`)
     ])
       .then(([gamesRes, setupRes, noteRes]) => {
 
@@ -71,7 +63,7 @@ class App extends Component {
       })
       .catch(error => {
         console.error({ error });
-      })
+      });
 
   }
 
