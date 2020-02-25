@@ -9,6 +9,10 @@ export default class NewGame extends React.Component {
         name: ''
     }
 
+    componentDidMount(){
+        this.checkLogin();
+    }
+
 //check to see if the user is logged into a valid account
     checkLogin() {
         return fetch(`${this.context.API_URL}/user/login`, {
@@ -23,7 +27,6 @@ export default class NewGame extends React.Component {
     }
 
     ChangeName(e) {
-
         this.setState({
             name: e.currentTarget.value
         });
@@ -62,7 +65,6 @@ export default class NewGame extends React.Component {
 
     render() {
         //check to see if the user is logged into a valid account
-        this.checkLogin();
         return (
             <div className='new_game_page'>
                 <Head></Head>

@@ -38,11 +38,12 @@ export default class NoteList extends React.Component {
         }
     }
 
+    componentDidMount(){
+        this.checkLogin();
+    }
 
 
     render() {
-        //check to see if the user is logged into a valid account
-        this.checkLogin();
         //gets relevant information for the 
         let route = this.props.location.pathname;
         const gameid = parseInt(route.replace('/game/', '').split('/')[0]);

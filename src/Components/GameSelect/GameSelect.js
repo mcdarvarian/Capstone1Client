@@ -74,12 +74,18 @@ export default class GameSelect extends React.Component {
             });
     }
 
+    componentDidMount(){
+        this.checkLogin();
+    }
+
+
     render() {
-    //check to see if the user is logged into a valid account
-      this.checkLogin();
+
             //get all games filtering ones relevant to the user
             const { games } = this.context;
-            const items = games.map(game => {
+            let items;
+            if(!!games){
+             items= games.map(game => {
                 if (this.state.user.id === game.users_id) {
                     return (
                         <li className='game'  >
@@ -103,6 +109,7 @@ export default class GameSelect extends React.Component {
                 }
             }
             );
+        }
             return (
                 <div className="game_select">
                     <Head></Head>

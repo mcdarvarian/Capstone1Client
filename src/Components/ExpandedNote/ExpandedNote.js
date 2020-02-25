@@ -51,9 +51,12 @@ export default class ExpandedNote extends React.Component {
         this.props.history.push('/login');
     }
 
-    render() {
-        //check if the user is logged to a valid account
+    componentDidMount(){
         this.checkLogin();
+    }
+
+
+    render() {
         //get various pieces of information 
         let note = [];
         const id = this.props.location.pathname.replace('/note/', '').split('/');

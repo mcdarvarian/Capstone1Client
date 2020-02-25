@@ -34,7 +34,7 @@ export default class NoteForm extends React.Component {
     //checks to see if the note id is 0, if it is, leaves things empty, if it isnt, find the note and updates the state, returns null
     getNoteIfExists() {
 
-        let id = this.props.location.pathname.replace('/note-form/', '').split('/')[2];
+        let id = this.props.location.pathname.replace('/note-form/', '').split('/')[2] || 0;
         if (id === 0) {
             return [false, 0, '', ''];
         } else {
@@ -134,11 +134,14 @@ export default class NoteForm extends React.Component {
         });
     }
 
-    render() {
-        //check to see if the user is logged into a valid account
+    componentDidMount(){
         this.checkLogin();
+    }
+
+
+    render() {
         const [exists, id, title, contents] = this.getNoteIfExists();
-        const gameid = parseInt(this.props.location.pathname.replace('/note-form/', '').split('/')[0]);
+        const gameid = parseInt(this.props.location.pathname.replace('/note-form/', '').split('/')[0]) || 0;
         //const tabid = parseInt(this.props.location.pathname.replace('/note-form/', '').split('/')[0])
         return (
             <div className='note_form_page'>
