@@ -11,7 +11,6 @@ import LoginForm from './Components/Login/LoginForm';
 import Signup from './Components/Signup/Signup';
 import Shhh from './Components/SecretAdminPage/Resetuser';
 import config from './config';
-import TokenService from './TokenService';
 
 
 import './App.css';
@@ -147,8 +146,6 @@ class App extends Component {
         </Switch>
       </>
     );
-
-
   }
 
 

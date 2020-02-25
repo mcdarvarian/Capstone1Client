@@ -142,7 +142,6 @@ export default class NoteForm extends React.Component {
     render() {
         const [exists, id, title, contents] = this.getNoteIfExists();
         const gameid = parseInt(this.props.location.pathname.replace('/note-form/', '').split('/')[0]) || 0;
-        //const tabid = parseInt(this.props.location.pathname.replace('/note-form/', '').split('/')[0])
         return (
             <div className='note_form_page'>
                 <Head></Head>

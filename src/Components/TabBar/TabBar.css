@@ -3,8 +3,6 @@
 }
 
 .tab_bar{
-    /*display: inline-table;
-    /*display: inline-block;*/
     border: 1px black solid;
     position: fixed;
     height: 100%;
@@ -17,9 +15,6 @@ ul{
     list-style: none;
     margin: 0;  
     padding: 0;
-    /*padding-left: 10px;
-    padding-right: 10px;
-    padding-top: 10px;*/
 }
 
 .tab{
@@ -37,7 +32,6 @@ ul{
 @media (max-width: 800px){
     .tab {
         font-size: 20px;
-        /*background-color: green;*/
     }
 }
 
@@ -50,4 +44,3 @@ ul{
         font-size: 15px;
     }
 }
-/*font-size: calc(18px + (26 - 14) * ((100vw - 300px) / (1600 - 300)));*/
