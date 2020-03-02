@@ -70,24 +70,11 @@ export default class LoginForm extends React.Component{
                     <button type='submit' className='login_button' >Login</button>
                 </form>
                 <button className='sign_up' onClick={() => this.SignUp()} >Sign Up</button>
-                <p className='landing'>Hello! Welcome to using This Table Top Role Playing Game Notebook App! Here's how to use this
-                    app to the best functionality: <br />
-                    -this is designed to be navigated quickly and easily by links, you could type in addresses but 
-                    the intention is to be used by links <br />
-                    -you can user name:demo password:demo if you dont want to sign up <br />
-                    -to get to a game use /game/(gameId)/1 <br />
-                    -to get to a tab (1-6) simply use /game/(gameId)/(tabNumber)<br />
-                    -at the moment you are able to access other people's games (authentification partially enabled at the
-                    moment due to a few bugs)<br />
-                    -to view a note use /note/(gameId)/(tabNumber)/(noteId)<br />
-                    -to make a note use /note/(gameId)/(tabNumber)/0<br />
-                    -to update a note use /note/(gameId)/(tabNumber)/(noteId)<br />
-                    -to make a game use /new-game<br />
-                    -to login use /login ()<br />
-                    -to signup use /signup<br />
-                    -if you want to try to be tricky go to /shhh and you can delete/update other accounts 
-                    (but only if you have the admin key) (there is no way to get to this page with links)
-                    -have fun!!<br />
+                <p className='landing'>Howdy! This application is used to take notes for a Table Top RolePlaying Game!<br/><br/>
+                If you don't play too many of those this may not be for you, but if you do then welcome!!<br/><br/>
+                If you want to just demo the site, use username: <b>demo</b> password: <b>demo</b>  to log in and play around.<br/><br/>
+                You can make a game, or select from one of the games that already exist. Once you're in, you can navigate<br/><br/>
+                between sections by clicking on tabs on the side, and make or edit notes as you see fit! Have fun!<br/><br/>
                 </p>
             </div>
         );

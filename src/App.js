@@ -18,7 +18,6 @@ import './App.css';
 
 
 const API_URL = config.API_URL;
-
 class App extends Component {
 
   state = {
