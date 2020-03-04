@@ -73,7 +73,7 @@ export default class NoteList extends React.Component {
                     <ul className='note_list'>
                         {noteList}
                         <NavLink className='small_note' to={`/note-form/${gameid}/${tabid}/0`} ><li>
-                            <h3>Make New Note</h3></li></NavLink>
+                            <h3>New Note</h3></li></NavLink>
                     </ul>
                 </div>
                 <div className='goback'>
