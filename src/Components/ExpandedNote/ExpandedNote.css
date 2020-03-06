@@ -2,13 +2,18 @@
     display: block;
     margin-left: 141px;
 }
+.expanded_note{
+    overflow-x: hidden; 
+}
 
 .delete_note_button p, .update_note_button p{
     text-align: center;
 }
 
 .note_content{
-    margin: 10px;
+    max-width: 1000px;
+    margin: auto;
+    line-height: 1.6;
     text-align: left;
     white-space: pre-wrap;
 }

@@ -76,7 +76,7 @@ export default class ExpandedNote extends React.Component {
             <div className='expanded_note'>
                 <Head></Head>
                 <header>
-                    <h1 className='gamename'>{gameName.gamename}/{tabName.tabname}</h1>
+                    <h1 className='gamename'>{gameName.gamename}<br/>{tabName.tabname}</h1>
 
                 </header>
                 <main className='expanded_notes'>

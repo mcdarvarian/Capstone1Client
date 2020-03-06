@@ -16,7 +16,13 @@ button{
 }
 
 .landing{
+    display: block;
+    margin: auto;
+    margin-top: 20px;
+    max-width: 570px;
     height: 100vw;
-    text-align: center;
-    text-overflow: break-word;
+    align-self: center;
+    text-align: left;
+    word-wrap: break-word;
+    white-space: normal;
 }

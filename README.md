@@ -5,6 +5,9 @@ Live Link to app:
 
 https://capstone-client.pupeljack.now.sh/
 
+Summary:
+Its a notebook for any table top role playing games you may play, designed to be quick at getting between notes, planning on adding additional features in the future but for now you can make games, and make notes within a game's tabs. Its not super complex cause I wanted to focus on speed instead 
+
 Client Documentation
 
 / -> takes you to the game select screen
@@ -21,8 +24,7 @@ Client Documentation
 Technology used:
 React, CSS, Node, Express, PostgreSQL
 
-Summary:
-Its a notebook for any table top role playing games you may play, designed to be quick at getting between notes, planning on adding additional features in the future but for now you can make games, and make notes within a game's tabs. Its not super complex cause I wanted to focus on speed instead 
+
 
 Screenshots live at: 
 ![game selection](https://gyazo.com/2bc3d97251906ac6b36c83786366534d)
