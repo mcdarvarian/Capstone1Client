@@ -12,6 +12,7 @@
 
 .note_content{
     max-width: 1000px;
+    padding-left: 15px;
     margin: auto;
     line-height: 1.6;
     text-align: left;

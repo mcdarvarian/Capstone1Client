@@ -53,7 +53,7 @@ export default class NewGame extends React.Component {
             },
         }).then(res => {
             if (!res.ok) {
-                return res.json().then(e => Promise.reject(e))
+                window.alert('please enter a valid game title');
             }
             return res.json();
         }).then(game => {

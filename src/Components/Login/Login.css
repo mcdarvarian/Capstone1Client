@@ -25,4 +25,15 @@ button{
     text-align: left;
     word-wrap: break-word;
     white-space: normal;
+    font-size: 20px;
+    overflow-y: scroll;
 }
+
+.landing::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Hide scrollbar for IE and Edge */
+  .landing {
+    -ms-overflow-style: none;
+  }
